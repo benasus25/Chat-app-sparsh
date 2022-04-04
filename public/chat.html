@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="icon" href="./images/favicon.png" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.5/dayjs.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.6.0/qs.min.js"
+    ></script>
+    <script defer src="/socket.io/socket.io.js"></script>
+    <!-- <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script> -->
+    <script defer src="/js/chat.js"></script>
+    <title>Chat App</title>
+  </head>
+  <body>
+    <div class="chat">
+      <div class="chat__sidebar" id="sidebar"></div>
+      <div class="chat__main">
+        <div id="messages-container" class="chat__messages"></div>
+        <div class="compose">
+          <form id="message-form" class="my-3">
+            <input
+              name="message"
+              type="text"
+              id="messageInput"
+              class="form-control"
+              required
+              autocomplete="off"
+              placeholder="type a message"
+            />
+            <button type="submit" id="msg-btn" title="send" role="send-button">
+              <i class="fas fa-paper-plane fa-2x"></i>
+            </button>
+          </form>
+          <button
+            type="button"
+            id="location-btn"
+            title="send location"
+            role="send-location-button"
+          >
+            <i class="fas fa-map-marker-alt fa-2x"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- templates -->
+    <script id="message" type="text/html">
+      <div class="message">
+        <p>
+          <span class="message__name">{{username}}</span
+          ><span class="message__meta">{{createdAt}}</span>
+        </p>
+        <p class="message">{{msg}}</p>
+      </div>
+    </script>
+
+    <script id="own-message" type="text/html">
+      <div class="message own-message">
+        <p>
+          <span class="message__name">{{username}}</span
+          ><span class="message__meta">{{createdAt}}</span>
+        </p>
+        <p class="message">{{msg}}</p>
+      </div>
+    </script>
+
+    <script id="admin-message" type="text/html">
+      <div class="message admin-message">
+        <p>
+          <span class="message__meta">{{createdAt}}</span>
+        </p>
+        <p class="message">{{msg}}</p>
+      </div>
+    </script>
+
+    <script id="location" type="text/html">
+      <div class="message">
+        <p>
+          <span class="message__name">{{username}}</span
+          ><span class="message__meta">{{createdAt}}</span>
+        </p>
+        <p class="message">
+          <a href="{{locationLink}}" target="_blank">My location</a>
+        </p>
+      </div>
+    </script>
+
+    <script id="own-location" type="text/html">
+      <div class="message own-location">
+        <p>
+          <span class="message__name">{{username}}</span
+          ><span class="message__meta">{{createdAt}}</span>
+        </p>
+        <p class="message">
+          <a href="{{locationLink}}" target="_blank">My location</a>
+        </p>
+      </div>
+    </script>
+
+    <script id="room-data-template" type="text/html">
+      <h1 class="room-title">{{room}}</h1>
+      <h3 class="list-title">Users</h3>
+      <ul>
+        {{#userList}}
+        <li class="users">{{username}}</li>
+        {{/userList}}
+      </ul>
+    </script>
+  </body>
+</html>
